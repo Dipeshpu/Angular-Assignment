@@ -1,0 +1,69 @@
+<mat-card>
+	<form [formGroup]="user" ><!-- (ngSubmit)="submitForm()" -->
+	<mat-horizontal-stepper formArrayName="userDetails" linear>
+		<mat-step formGroupName="0"  [stepControl]="userDetails.at(0)">
+			<label><h3>Find Your Practice</h3></label><br /><br />
+			<input matInput formControlName="spe" type="text"
+         placeholder="Search for a specialty"
+         [formControl]="control"
+         [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let specialty_name of filteredspecialty | async" [value]="specialty_name">
+      {{specialty_name}}
+    </mat-option>
+  </mat-autocomplete><br /><br />
+			<h4>Enter Your Practice Name</h4>
+			<mat-form-field>
+				<input matInput formControlName="name" placeholder="name">
+			</mat-form-field><br />
+			<button mat-button matStepperNext type="button">Next</button>
+		</mat-step>
+		<mat-step formGroupName="1"  [stepControl]="userDetails.at(1)">
+			<label><h3>Confirm Practice Details</h3></label><br /><br />
+			<h4> Practice Name</h4>
+			<mat-form-field>
+				<input matInput formControlName="practicename" placeholder="name">
+			</mat-form-field><br />
+			<h4> Address</h4>
+			<mat-form-field>
+				<input matInput formControlName="address" placeholder="Address">
+			</mat-form-field><br />
+			<h4> City</h4>
+			<mat-form-field>
+				<input matInput formControlName="city" placeholder="City">
+			</mat-form-field><br />
+			<h4> State</h4>
+			<mat-form-field>
+				<input matInput formControlName="state" placeholder="State">
+			</mat-form-field><br />
+			<h4> Zip Code</h4>
+			<mat-form-field>
+				<input matInput formControlName="zipcode" placeholder="Zip Code">
+			</mat-form-field><br />
+			<button mat-button matStepperNext type="button">Next</button>
+		</mat-step>
+		<mat-step formGroupName="2" [stepControl]="userDetails.at(2)">
+			<label><h3>Contact Info</h3></label><br /><br />
+			<mat-form-field>
+				<input matInput formControlName="fname" placeholder="Full Name" required>
+			</mat-form-field><br />
+			<mat-form-field>
+				<input matInput formControlName="email" placeholder="Email" required>
+			</mat-form-field><br />
+			<mat-form-field>
+				<div class="form-group">
+				<input matInput formControlName="cell" id="cell" placeholder="Cell Number" type="text" class="form-control" required>
+				<div *ngIf="userDetails.at(2).get('cell').touched && userDetails.at(2).get('cell').invalid" class="alert alert-danger">
+
+                <div *ngIf="userDetails.at(2).get('cell').errors.required">Mobile Number is required.</div>
+
+                <div *ngIf="userDetails.at(2).get('cell').errors.pattern">Please, Enter 10 digit Mobile Number.</div>
+
+            </div></div>
+			</mat-form-field><br />
+			<button mat-button type="button" (click)="submitForm()" >Submit</button>
+			
+		</mat-step>
+	</mat-horizontal-stepper>
+</form>
+</mat-card>
